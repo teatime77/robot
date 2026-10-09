@@ -1,0 +1,17 @@
+{
+  "name": "esp32-ble-lab-web",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "test": "node --experimental-strip-types --test test/*.test.ts"
+  },
+  "devDependencies": {
+    "@types/web-bluetooth": "0.0.21",
+    "typescript": "5.8.3",
+    "vite": "6.3.5"
+  }
+}

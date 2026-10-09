@@ -1,0 +1,4 @@
+firmware/.pio/
+web/node_modules/
+.vscode/
+*.log

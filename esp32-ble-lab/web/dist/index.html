@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ja">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#163c50"><title>ESP32 BLE Lab</title>  <script type="module" crossorigin src="./assets/index-CAENL77r.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-Crzzyf8m.css">
+</head>
+<body>
+  <header><span class="tag">ROBOTICS / BLE</span><h1>ESP32 BLE Lab</h1><p>サーボを動かす。動きを計測する。</p></header>
+  <main>
+    <section class="connection"><div><span id="connection-state" class="badge">未接続</span><p id="message" role="status" aria-live="polite">ESP32の電源を入れ、接続してください。</p></div><div class="actions"><button id="connect">ESP32に接続</button><button id="disconnect" class="secondary" disabled>切断</button></div></section>
+    <div id="support" class="notice" hidden></div>
+    <section class="hardware"><span>PCA9685 <b id="pca">—</b></span><span>MPU-6050 <b id="imu">—</b></span><span>出力状態 <b id="armed">停止</b></span></section>
+    <div class="panels">
+    <section class="panel"><span class="tag">01 / SERVO</span><h2>サーボ操作</h2>
+      <p class="muted">表示する角度は指令値です。SG90の実測角度ではありません。</p>
+      <label>チャンネル <select id="channel" disabled></select></label>
+      <div class="angle"><output id="angle-label" for="angle">90°</output><span>目標角度</span></div>
+      <label class="sr-only" for="angle">目標角度</label><input id="angle" type="range" min="60" max="120" value="90" step="1" disabled>
+      <div class="range-labels"><span>60°</span><span>90°</span><span>120°</span></div>
+      <label>移動時間 <select id="duration" disabled><option value="500">0.5秒</option><option value="1000" selected>1秒</option><option value="2000">2秒</option><option value="0">即時</option></select></label>
+      <div class="actions"><button id="arm" disabled>90°で有効化</button><button id="move" disabled>目標角度へ移動</button><button id="disable" class="secondary" disabled>このCHのPWM停止</button></div>
+      <p class="warning">有効化すると直ちに90°を指令します。機構を外したサーボ1個から確認してください。</p>
+      <button id="stop" class="danger" disabled>全チャンネルのPWM停止</button><p class="muted small">PWM停止は電源遮断ではありません。保持力を失って腕などが下がることがあります。</p>
+    </section>
+    <section class="panel"><span class="tag">02 / MOTION SENSOR</span><h2>IMU計測</h2>
+      <div class="actions"><label>通知頻度 <select id="rate" disabled><option value="5">5 Hz</option><option value="10" selected>10 Hz</option><option value="20">20 Hz</option></select></label><button id="stream" disabled>計測開始</button></div>
+      <div class="reading-head"><span>加速度 / m/s²</span><span>角速度 / °/s</span></div>
+      <div class="readings"><div><p>X <b id="ax">—</b></p><p>Y <b id="ay">—</b></p><p>Z <b id="az">—</b></p></div><div><p>X <b id="gx">—</b></p><p>Y <b id="gy">—</b></p><p>Z <b id="gz">—</b></p></div></div>
+      <canvas id="chart" width="600" height="180" aria-label="加速度X・Y・Zの直近100サンプル"></canvas><p class="legend"><span class="x">● X</span><span class="y">● Y</span><span class="z">● Z</span> 加速度 ±20 m/s²</p>
+      <p id="samples" class="muted small">計測していません。</p><button id="csv" class="secondary" disabled>計測データをCSV保存</button>
+      <p class="muted small">重力を含む生の加速度です。姿勢推定・ジャイロのゼロ点補正はまだ行いません。保存上限は最新6,000件です。</p>
+    </section></div>
+    <section class="panel"><h2>通信ログ</h2><pre id="log" aria-live="off"></pre></section>
+    <footer>Windows / Android のChrome対応 · 接続が切れるとPWM停止 · 応答が5秒途切れるとPWM停止</footer>
+  </main>
+</body></html>
